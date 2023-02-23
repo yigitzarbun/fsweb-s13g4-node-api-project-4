@@ -1,34 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const md = require("./../middleware/middleware");
+const users = require("./users");
 
 let loggedInUsers = [];
-let id = 0;
-getId = () => ++id;
 
-const users = [
-  {
-    id: getId(),
-    username: "yigit",
-    password: 1234,
-  },
-  {
-    id: getId(),
-    username: "ali",
-    password: 1234,
-  },
-  {
-    id: getId(),
-    username: "ayşe",
-    password: 1234,
-  },
-];
-
-router.get("/", (req, res) => {
+router.get("/", md.logger, (req, res) => {
   res.status(200).json(users);
 });
 
-router.post("/kayitol", md.validateUser, (req, res) => {
+router.post("/kayitol", md.validateUser, md.logger, (req, res) => {
   let newUser = {
     id: getId(),
     username: req.username,
@@ -38,7 +19,7 @@ router.post("/kayitol", md.validateUser, (req, res) => {
   res.status(200).json(newUser);
 });
 
-router.post("/giris", md.validateUser, (req, res) => {
+router.post("/giris", md.validateUser, md.logger, (req, res) => {
   //İLK OLARAK LOGIN EKRANINDA KULLANICI BİLGİLERİ MEVCUT MU KONTROL
   //DAHA SONRA KULLANICI BİLGİLERİ DB'DE MEVCUT MU KONTROL
   let loginUser = {
