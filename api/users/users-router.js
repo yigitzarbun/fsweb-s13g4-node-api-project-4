@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const md = require("./../middleware/middleware");
 
+let loggedInUsers = [];
 let id = 0;
 getId = () => ++id;
 
@@ -53,6 +54,7 @@ router.post("/giris", md.validateUser, (req, res) => {
       users[i].password === loginUser.password
     ) {
       isAuth = true;
+      loggedInUsers.push(loginUser);
     }
   }
   isAuth
