@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const md = require("./../middleware/middleware");
 
 let id = 0;
 getId = () => ++id;
@@ -26,11 +27,11 @@ router.get("/", (req, res) => {
   res.status(200).json(users);
 });
 
-router.post("/kayitol", (req, res) => {
+router.post("/kayitol", md.validateUser, (req, res) => {
   let newUser = {
     id: getId(),
-    username: req.body.username,
-    password: req.body.password,
+    username: req.username,
+    password: req.password,
   };
   users.push(newUser);
   res.status(200).json(newUser);
